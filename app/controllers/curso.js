@@ -18,14 +18,14 @@ module.exports = function() {
         var curso = cursos.filter(function(curso) {
             return curso._id == idCurso;
         })[0];
-        curso ? res.json(curso) : res.status(404).send('Curso não encontrado!');
+        curso ? res.json(curso) : res.status(404).sendStatus('Curso não encontrado!');
     };
     controller.removeCurso = function(req, res) {
         var idCurso = req.params.id;
         cursos = cursos.filter(function(curso) {
             return curso._id != idCurso;
         });
-        res.send(204).end();
+        res.sendStatus(204).end();
     };
 
     controller.salvaCurso = function(req, res) {
