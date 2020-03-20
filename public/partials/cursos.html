@@ -26,7 +26,7 @@
 
 <br>
 
-<button class="btn btn-primary" ng-click='incrementa()'>Novo</button>
+<a ng-href='#/curso' class='btn btn-primary'>Novo Curso</a>
 
 <p ng-show="cursos.length">Cursos cadastrados: {{cursos.length}}</p>
 <p class="text-info" ng-hide="cursos.length">Não há cursos cadastrados</p>
@@ -42,6 +42,6 @@
             <td><a ng-href='#/curso/{{curso._id}}'>{{curso.curso}}</a></td>
             <td>{{curso.coordenador}}</td>
             <td class="text-center"><button ng-click='remove(curso)' class="btn btn-warning">Remover</button></td>
-</tr>
-</table>
+        </tr>
+    </table>
 </div>
