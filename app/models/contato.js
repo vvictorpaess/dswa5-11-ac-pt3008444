@@ -4,5 +4,7 @@ module.exports = function() {
         nome: { type: String, required: true },
         email: { type: String, required: true, index: { unique: true } }
     });
+    mongoose.models = {}
     return mongoose.model('Contato', schema);
+    
 };

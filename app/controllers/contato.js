@@ -1,6 +1,8 @@
+var verificaAutenticacao = require('../../DSWA5/config/auth');
+
 module.exports = function(app) {
     var Contato = app.models.contato;
-    var controller = {};
+    var controller = app.controllers.contato;    
 
     controller.listaContatos = function(req, res) {
         Contato.find().exec().then(
@@ -60,5 +62,22 @@ module.exports = function(app) {
         }
     };
 
+    function verificaAutenticacao(req, res, next) {
+        if (req.isAuthenticated()) {
+        return next();
+        } else {
+        res.status('401').json('Não autorizado');
+        }
+        
+
+        app.route('/contatos')
+            .get(verificaAutenticacao, controller.listaTodos)
+            .post(verificaAutenticacao, controller.salvaContato);
+        app.route('/contatos/:id')
+            .get(verificaAutenticacao, controller.obtemContato)
+            .delete(verificaAutenticacao, controller.removeContato);
+        }
+
     return controller;
+
 };
