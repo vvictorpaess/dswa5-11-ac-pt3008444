@@ -36,7 +36,6 @@ module.exports = function() {
     app.use(passport.session());
 
     //Carregar pastas
-    //load('models', { cwd: 'app' }).then('controllers').then('routes').into(app);
     load('models', {cwd: 'app'})
         .then('controllers')
         .then('routes/auth.js')
