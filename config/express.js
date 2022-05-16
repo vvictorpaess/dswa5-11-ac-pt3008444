@@ -10,15 +10,10 @@ module.exports = function() {
     //Instância do Express
     var app = express();
 
-   
     //Porta da aplicação	
     //app.set('port', 3000);
-    app.set('port', process.env.PORT || 5000);
+    app.set('port', process.env.PORT || 3000);
 
-    app.use(cookieParser());
-    app.use(session({ secret: 'homem avestruz', resave: true, saveUninitialized: true}));
-    app.use(passport.initialize());
-    app.use(passport.session());
     //Middleware
     app.use(express.static('./public'));
     app.use(bodyParser.urlencoded({ extended: true }));
@@ -29,8 +24,24 @@ module.exports = function() {
     app.set('view engine', 'ejs');
     app.set('views', './app/views');
 
+    //OAuth
+    app.use(cookieParser());
+    app.use(session(
+        {   secret: 'homem avestruz',
+            resave: true,
+            saveUninitialized: true
+        }
+    ));
+    app.use(passport.initialize());
+    app.use(passport.session());
+
     //Carregar pastas
-    load('models', { cwd: 'app' }).then('controllers').then('routes/auth.js').then('routes').into(app);
+    //load('models', { cwd: 'app' }).then('controllers').then('routes').into(app);
+    load('models', {cwd: 'app'})
+        .then('controllers')
+        .then('routes/auth.js')
+        .then('routes')
+        .into(app);
 
     return app;
 };

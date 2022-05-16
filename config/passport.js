@@ -1,5 +1,5 @@
 var passport = require('passport');
-var GitHubStrategy = require('passport-github').Strategy;
+var GitHubStrategy = require('passport-github2').Strategy;
 var mongoose = require('mongoose');
 
 module.exports = function() {
@@ -9,20 +9,20 @@ module.exports = function() {
     passport.use(new GitHubStrategy({
         clientID: 'a38ebefcb4b4df216e6c',
         clientSecret: '932c73298f0e337e608bd945ac5b25054d807575',
-        callbackURL: 'http://localhost:5000/auth/github/callback'
-    }, function(accessToken, refreshToken, profile, done) {
-            Usuario.findOrCreate(
-                { "login" : profile.username},
-                { "nome" : profile.username},
-                function(erro, usuario) {
-                    if(erro) {
-                        console.log(erro);
-                        return done(erro);
-                }
-                    return done(null, usuario);
-                }
-            );
-    }));
+        callbackURL: 'http://localhost:3000/auth/github/callback'
+        }, function(accessToken, refreshToken, profile, done) {
+                Usuario.findOrCreate(
+                    { "login" : profile.username},
+                    { "nome" : profile.username},
+                    function(erro, usuario){
+                        if(erro){
+                            console.log(erro);
+                            return done(erro);
+                        }
+                        return done(null, usuario);
+                    }
+                )
+        }));
 
     passport.serializeUser(function(usuario, done) {
         done(null, usuario._id);
@@ -31,7 +31,7 @@ module.exports = function() {
     passport.deserializeUser(function(id, done) {
         Usuario.findById(id).exec()
         .then(function(usuario) {
-        done(null, usuario);
+                done(null, usuario);
+            });
         });
-    });
 };
