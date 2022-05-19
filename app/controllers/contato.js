@@ -1,3 +1,5 @@
+var verificaAutenticacao = require('../../config/auth');
+
 module.exports = function (app) {
    var Contato = app.models.contato;
    var controller = app.controllers.contato;
@@ -72,6 +74,13 @@ module.exports = function (app) {
          );
       }
    };
+
+   app.route('/contatos')
+   .get(verificaAutenticacao, controller.listaTodos)
+   .post(verificaAutenticacao, controller.salvaContato);
+   app.route('/contatos/:id')
+   .get(verificaAutenticacao, controller.obtemContato)
+   .delete(verificaAutenticacao, controller.removeContato);
 
    return controller;
    
