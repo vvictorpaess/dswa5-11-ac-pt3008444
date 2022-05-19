@@ -9,15 +9,7 @@ module.exports = function(app) {
         successRedirect: '/'
     }));
 
-    app.get('/', function(req, res, next) {
-        if(req.isAuthenticated()) {
-        // permite que outras rotas sejam processadas
-            return next();
-        } else {
-        // renderiza auth.ejs
-            res.render("auth");
-        }
-    });
+   
 
     app.get('/logout', function(req, res){
         req.logOut();
