@@ -9,7 +9,7 @@ module.exports = function(app) {
         successRedirect: '/'
     }));
 
-    app.get('/', function(req, res, next) {
+    app.get('/#/contatos', function(req, res, next) {
         if(req.isAuthenticated()) {
         // permite que outras rotas sejam processadas
             return next();
