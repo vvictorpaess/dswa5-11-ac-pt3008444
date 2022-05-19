@@ -1,4 +1,4 @@
-function verificaAutenticacao(req, res, next) {
+/*function verificaAutenticacao(req, res, next) {
     if (req.isAuthenticated()) {
     return next();
     } else {
@@ -14,4 +14,14 @@ module.exports = function(app) {
     app.route('/contatos/:id')
         .get(verificaAutenticacao, controller.obtemContato)
         .delete(verificaAutenticacao, controller.removeContato);
+};*/
+
+module.exports = function(app) {
+    var controller = app.controllers.contato;
+    app.route('/contatos')
+        .get(controller.listaContatos)
+        .post(controller.salvaContato);
+    app.route('/contatos/:id')
+        .get(controller.obtemContato)
+        .delete(controller.removeContato);
 };
